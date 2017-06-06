@@ -8,7 +8,7 @@ def test_agg_to_df_date_hist_max(self):
             - max
     """
 
-    query = {"aggs":{"daily":{"date_histogram":{"field":"timestamp","interval":"day"},"aggs":{"temperature":{"max":{"field":"temperature"}},"rain":{"max":{"field":"rain"}},"wind_speed":{"max":{"field":"wind_speed"}}}}},"query":{"bool":{"filter":{"range":{"timestamp":{"gte":1496002400,"lte":1496302400}}}}},"size":0}
+    query = {"aggs":{"daily":{"date_histogram":{"field":"timestamp","interval":"day"},"aggs":{"temperature":{"max":{"field":"temperature"}},"rain_volume":{"max":{"field":"rain_volume"}},"wind_speed":{"max":{"field":"wind_speed"}}}}},"query":{"bool":{"filter":{"range":{"timestamp":{"gte":1496002400,"lte":1496302400}}}}},"size":0}
 
     result = {
         "took": 7,
@@ -29,54 +29,54 @@ def test_agg_to_df_date_hist_max(self):
                         "key_as_string": "1495929600",
                         "key": 1495929600000,
                         "doc_count": 450,
-                        "observed_tp_replaytv": { "value": 32317308 },
-                        "observed_tp_vod": { "value": 37417283 },
-                        "observed_tp_livetv": { "value": 77495254 }
+                        "temperature": { "value": 32317308 },
+                        "rain_volume": { "value": 37417283 },
+                        "wind_speed": { "value": 77495254 }
                     },
                     {
                         "key_as_string": "1496016000",
                         "key": 1496016000000,
                         "doc_count": 325,
-                        "observed_tp_replaytv": { "value": None },
-                        "observed_tp_vod": { "value": 418968 },
-                        "observed_tp_livetv": { "value": 3986292 }
+                        "temperature": { "value": None },
+                        "rain_volume": { "value": 418968 },
+                        "wind_speed": { "value": 3986292 }
                     },
                     {
                         "key_as_string": "1496102400",
                         "key": 1496102400000,
                         "doc_count": 2621,
-                        "observed_tp_replaytv": { "value": 2966713 },
-                        "observed_tp_vod": { "value": 3328655 },
-                        "observed_tp_livetv": { "value": 6485277 }
+                        "temperature": { "value": 2966713 },
+                        "rain_volume": { "value": 3328655 },
+                        "wind_speed": { "value": 6485277 }
                     }
                 ]
             }
         }
     }
 
-    expected = pd.DataFrame.from_records([
+    expected = [
         {
             "key": 1495929600000,
             "doc_count": 450,
-            "observed_tp_replaytv": "32317308",
-            "observed_tp_vod": "37417283",
-            "observed_tp_livetv": "77495254",
+            "temperature": 32317308,
+            "rain_volume": 37417283,
+            "wind_speed": 77495254,
         },
         {
             "key": 1496016000000,
             "doc_count": 325,
-            "observed_tp_replaytv": None,
-            "observed_tp_vod": "418968",
-            "observed_tp_livetv": "3986292",
+            "temperature": None,
+            "rain_volume": 418968,
+            "wind_speed": 3986292,
         },
         {
             "key": 1496102400000,
             "doc_count": 2621,
-            "observed_tp_replaytv": "2966713",
-            "observed_tp_vod": "3328655",
-            "observed_tp_livetv": "6485277",
+            "temperature": 2966713,
+            "rain_volume": 3328655,
+            "wind_speed": 6485277,
         },
-    ])
+    ]
 
 def test_agg_to_df_date_hist_cardinality(self):
     """Tests the conversion of an aggregation to data frame.

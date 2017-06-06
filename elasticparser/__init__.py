@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from .parser import agg_to_df
+from .parser import flatten_agg

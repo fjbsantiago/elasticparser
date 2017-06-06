@@ -1,3 +1,5 @@
+ignore = [ 'aggs', 'aggregations' ]
+
 class ElasticParser():
 
     def cardinality(agg):
@@ -10,4 +12,7 @@ class ElasticParser():
         pass
 
     def flatten(agg):
+        """Converts a nested elasticsearch response object to a 
+        flat list of dictionaries.
+        """
         pass
